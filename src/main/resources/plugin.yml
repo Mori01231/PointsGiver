@@ -1,0 +1,11 @@
+name: PointsGiver
+version: @version@
+main: com.github.mori01231.pointsgiver.PointsGiver
+api-version: 1.15
+prefix: [ PointsGiver ]
+
+commands:
+  givepoints:
+    description: Gives all players in server points.
+    permission: givepoints.give
+    aliases: gp
