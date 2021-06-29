@@ -1,11 +1,21 @@
 name: PointsGiver
-version: @version@
+version: ${project.version}
 main: com.github.mori01231.pointsgiver.PointsGiver
-api-version: 1.15
-prefix: [ PointsGiver ]
+authors: [ Mori01231 ]
+website: https://github.com/Mori01231
 
 commands:
-  givepoints:
-    description: Gives all players in server points.
-    permission: givepoints.give
-    aliases: gp
+  pointsgive:
+    description: PointsGiverの基本コマンド。
+    aliases: [pg,pgive]
+    usage: エラー。/poinsgive ポイント数 で使用できます。
+
+permissions:
+  pointsgive.*:
+    description: PointsGiveの全コマンドへのアクセスを可能にする。
+    default: false
+    children:
+      pointsgive.give: true
+  pointsgive.give:
+    description: Allows you to use /pointsgive command.
+    default: true

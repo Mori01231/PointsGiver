@@ -1,0 +1,4 @@
+# PointsGiver config
+
+# 20分ごとに渡されるオンタイムポイントの量
+points_amount: 10
