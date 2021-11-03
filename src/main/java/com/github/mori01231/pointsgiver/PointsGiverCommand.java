@@ -59,6 +59,7 @@ public class PointsGiverCommand implements CommandExecutor {
                             PlayerPoints.getInstance().getAPI().giveAsync(player.getUniqueId(), givePoints).thenAccept(result -> {
                                 if (result) {
                                     getLogger().info("Gave " + playerName + " " + givePoints + " PlayerPoints.");
+                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7[&6PlayerPoints&7] &eあなたは &b" + givePoints + " &eオンタイムポイント &e受け取りました。"));
                                 } else {
                                     getLogger().warning("Unable to give " + playerName + " " + givePoints + " PlayerPoints.");
                                 }
