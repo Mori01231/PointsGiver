@@ -1,5 +1,6 @@
 package com.github.mori01231.pointsgiver;
 
+import org.black_ixx.playerpoints.PlayerPoints;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -55,8 +56,13 @@ public class PointsGiverCommand implements CommandExecutor {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            getServer().dispatchCommand(getServer().getConsoleSender(), "points give " + playerName + " " + givePoints);
-                            getLogger().info("Gave " + playerName + " " + givePoints + " PlayerPoints.");
+                            PlayerPoints.getInstance().getAPI().giveAsync(player.getUniqueId(), givePoints).thenAccept(result -> {
+                                if (result) {
+                                    getLogger().info("Gave " + playerName + " " + givePoints + " PlayerPoints.");
+                                } else {
+                                    getLogger().warning("Unable to give " + playerName + " " + givePoints + " PlayerPoints.");
+                                }
+                            });
                         }
                     }.runTaskLater(plugin, i);
 
