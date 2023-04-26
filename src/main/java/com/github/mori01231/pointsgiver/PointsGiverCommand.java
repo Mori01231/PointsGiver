@@ -1,5 +1,7 @@
 package com.github.mori01231.pointsgiver;
 
+import org.black_ixx.playerpoints.PlayerPoints;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -52,14 +54,15 @@ public class PointsGiverCommand implements CommandExecutor {
                 // 1 second delay in between each player getting their points
                 i+= 20;
                 if(playerName != null){
-                    new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            getServer().dispatchCommand(getServer().getConsoleSender(), "points give " + playerName + " " + givePoints);
+                    Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> {
+                        boolean result = PlayerPoints.getInstance().getAPI().give(player.getUniqueId(), givePoints);
+                        if (result) {
                             getLogger().info("Gave " + playerName + " " + givePoints + " PlayerPoints.");
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7[&6PlayerPoints&7] &eあなたは &b" + givePoints + " &eオンタイムポイント &e受け取りました。"));
+                        } else {
+                            getLogger().warning("Unable to give " + playerName + " " + givePoints + " PlayerPoints.");
                         }
-                    }.runTaskLater(plugin, i);
-
+                    }, i);
                 }
             }catch(Exception e){
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cException"));
